@@ -18,7 +18,7 @@
 	<div class="kotak_login">
 		<p class="tulisan_login">Silahkan login</p>
  
-		<form action="cek_login.php" method="post">
+		<form action="cek_logindokter.php" method="post">
 			<label>Nama</label>
 			<input type="text" name="nama" class="form_login" placeholder="Nama .." required="required">
  

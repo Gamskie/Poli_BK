@@ -1,8 +1,56 @@
 
-<?php 
-include 'koneksi.php';
+  <?php
+  include 'koneksi.php';
+  
+  // Start the session
+  if (!isset($_SESSION)) {
+      session_start();
+  }
+  
+  // Cek apakah dokter sudah login
+  if (!isset($_SESSION['nama_dokter'])) {
+      header("Location: logindokter.php");
+      exit;
+  }
+  
+  // Ambil nama dokter dari sesi
+  $nama_dokter = $_SESSION['nama_dokter'];
+  
+  // Query untuk mendapatkan data dokter
+  $queryGetDokter = "SELECT * FROM dokter WHERE nama = '$nama_dokter'";
+  $resultGetDokter = $mysqli->query($queryGetDokter);
+  
+  if ($resultGetDokter) {
+      $rowDokter = $resultGetDokter->fetch_assoc();
+  
+      // Proses form edit identitas dokter jika POST request
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_dokter = $_POST['id'];
+          $nama_dokter = $_POST['nama'];
+          $alamat = $_POST['alamat'];
+          $no_hp = $_POST['no_hp'];
+          $id_poli = $_POST['id_poli'];
+          $nip = $_POST['nip'];
+          $password = $_POST['password'];
+  
+          // Query untuk update identitas dokter
+          $queryUpdateDokter = "UPDATE dokter SET nama = '$nama_dokter', alamat = '$alamat', no_hp = '$no_hp', id_poli = '$id_poli', nip = '$nip', password = '$password' WHERE id = '$id_dokter'";
 
-?>
+          $resultUpdateDokter = $mysqli->query($queryUpdateDokter);
+  
+          if ($resultUpdateDokter) {
+              echo "<script>alert('Identitas dokter berhasil diupdate.');</script>";
+              // Refresh halaman untuk menampilkan perubahan
+              echo "<script>window.location.href = 'dokter.php';</script>";
+              exit;
+          } else {
+              echo "Terjadi kesalahan saat mengupdate identitas dokter: " . $mysqli->error;
+          }
+      }
+  } else {
+      echo "Terjadi kesalahan saat mengambil data dokter: " . $mysqli->error;
+  }
+  ?>
 
 <!DOCTYPE html>
 <!--
@@ -22,18 +70,82 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
 <?php include ("components/navbardokter.php"); ?>
 <?php include ("components/sidebardokter.php"); ?>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Identitas Dokter</h3>
+                                </div>
+                                <form role="form" method="POST">
+                                
+
+                                    <div class="card-body">
+
+                                    <div class="form-group">
+                                  <label for="id">ID Dokter</label>
+                                    <input type="text" class="form-control" id="id" name="id" value="<?php echo $rowDokter['id']; ?>" readonly>
+                                      </div>
+                                      
+                                        <div class="form-group">
+                                            <label for="nama">Nama Dokter</label>
+                                            <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $rowDokter['nama']; ?>" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat</label>
+                                            <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $rowDokter['alamat']; ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="no_hp">Nomor HP</label>
+                                            <input type="text" class="form-control" id="no_hp" name="no_hp" value="<?php echo $rowDokter['no_hp']; ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_poli">ID Poli</label>
+                                            <input type="text" class="form-control" id="id_poli" name="id_poli" value="<?php echo $rowDokter['id_poli']; ?>"readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nip">NIP</label>
+                                            <input type="text" class="form-control" id="nip" name="nip" value="<?php echo $rowDokter['nip']; ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" value="<?php echo $rowDokter['password']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Update Identitas</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="control-sidebar control-sidebar-dark">
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+
+</div>
+</body>
+
+</html>
 
 
-
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-  <?php include("pages/obat/obat.php");?>
   </div>
 
 

@@ -29,15 +29,7 @@ if($cek > 0){
 		// alihkan ke halaman dashboard admin
 		header("location:admin.php");
  
-	// cek jika user login sebagai pegawai
-	}else if($data['status']=="dokter"){
-		// buat session login dan username
-		$_SESSION['nama'] = $nama;
-		$_SESSION['status'] = "dokter";
-		// alihkan ke halaman dashboard pegawai
-		header("location:dokter.php");
- 
-	// cek jika user login sebagai pengurus
+	// cek jika user login sebagai pasien
 	}else if($data['status']=="pasien"){
 		// buat session login dan username
 		$_SESSION['nama'] = $nama;

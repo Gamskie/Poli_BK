@@ -19,6 +19,7 @@
   // Query to get the doctor's ID
   $queryGetDoctorID = "SELECT id FROM dokter WHERE nama = '$nama_dokter'";
   $resultGetDoctorID = $mysqli->query($queryGetDoctorID);
+
   
   if ($resultGetDoctorID) {
       $rowDoctorID = $resultGetDoctorID->fetch_assoc();
@@ -80,6 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <th>Hari</th>
                                                 <th>Jam Mulai</th>
                                                 <th>Jam Selesai</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                                 <a href='add_jadwal.php' class='btn btn-sm btn-success'>Tambah</a></td>
                                             </tr>
@@ -92,8 +94,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 echo "<td>{$rowSchedule['hari']}</td>";
                                                 echo "<td>{$rowSchedule['jam_mulai']}</td>";
                                                 echo "<td>{$rowSchedule['jam_selesai']}</td>";
-                                                echo "<td><a href='edit_jadwal.php?id={$rowSchedule['id']}' class='btn btn-sm btn-warning'>Edit</a> <a href='hapus_jadwal.php?id={$rowSchedule['id']}' class='btn btn-sm btn-danger' onclick='return confirm(\"Anda yakin ingin hapus?\");'>Hapus</a></td> ";
+                                                echo "<td>{$rowSchedule['status']}</td>";
                                                 
+                                                echo "<td>
+                                                 <a href='ubah_status.php?id={$rowSchedule['id']}&status=Aktif' class='btn btn-sm btn-success'>Aktif</a>
+                                                <a href='ubah_status.php?id={$rowSchedule['id']}&status=Tidak Aktif' class='btn btn-sm btn-danger'>Tidak Aktif</a>
+      </td>";
                                                 
                                                 echo "</tr>";
                                             }

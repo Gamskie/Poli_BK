@@ -179,7 +179,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 
                                 echo "<div class='form-group'>";
                                 echo "<label for='total_biaya'>Total Biaya:</label>";
-                                echo "<label for='total_biaya'>*Total harga sudah termasuk biaya periksa Rp.100.000</label>";
+                                echo "<label for='total_biaya'>*Total harga sudah termasuk biaya periksa Rp.150.000</label>";
                                 echo "<input type='text' class='form-control' name='total_biaya' readonly>";
                                 echo "</div>";
 
@@ -213,7 +213,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 // Tambahkan script untuk menghitung total biaya
                 $(document).ready(function() {
                     $('select[name="obat[]"]').change(function() {
-                        var totalBiaya = 100000;
+                        var totalBiaya = 150000;
                         $('select[name="obat[]"] option:selected').each(function() {
                             totalBiaya += parseFloat($(this).data('harga'));
                         });
@@ -234,7 +234,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     // Bagian 3: Menghitung total biaya obat yang dipilih
                     $('#obatPilihan').change(function() {
-                        var totalBiaya = 100000;
+                        var totalBiaya = 150000;
                         $('#obatPilihan option').each(function() {
                             totalBiaya += parseFloat($(this).data('harga'));
                         });
@@ -249,7 +249,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         selectedObat.remove().empty();
 
                         // Hitung kembali total biaya setelah menghapus
-                        var totalBiaya = 100000;
+                        var totalBiaya = 150000;
                         $('#obatPilihan option').each(function() {
                             totalBiaya += parseFloat($(this).data('harga'));
                         });
